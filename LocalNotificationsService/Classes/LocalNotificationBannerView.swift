@@ -10,6 +10,7 @@ import UIKit
 
 open class LocalNotificationBannerView: UIView {
     
+    let bannerID = UUID()
     var heightFixConstraint: NSLayoutConstraint?
     var widthFixConstraint: NSLayoutConstraint?
     
@@ -62,6 +63,12 @@ open class LocalNotificationBannerView: UIView {
         isMarkedForDismiss = true
         LocalNotificationBannerService.updateBannersInvocations()
     }
+    
+    ///When actually pushed to screen
+    open func didAppear() { }
+    
+    ///when dismissed from screen
+    open func didDisappear() { }
     
     var interactionFrameStart: CGPoint = .zero
     var currentlyKnownGestureRecognizerTranslation: CGPoint = .zero

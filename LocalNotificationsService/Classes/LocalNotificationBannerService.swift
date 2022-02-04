@@ -19,8 +19,8 @@ open class LocalNotificationBannerService {
         }
     }
     
-    public static func push(banner: LocalNotificationBannerView) {
-        guard let appWindow = appWindow else { return }
+    @discardableResult public static func push(banner: LocalNotificationBannerView) -> UUID? {
+        guard let appWindow = appWindow else { return nil }
         
         //if stack view is somewhere else - bring it there
         if mStackView.superview != appWindow {
@@ -37,6 +37,20 @@ open class LocalNotificationBannerService {
         
         bannerWaitQueue.append(banner)
         updateBannersInvocations()
+        return banner.bannerID
+    }
+    
+    public static func suspend(banner: LocalNotificationBannerView) {
+        suspend(bannerID: banner.bannerID)
+    }
+    
+    public static func suspend(bannerID: UUID) {
+        if let index = bannerWaitQueue.firstIndex(where: { $0.bannerID == bannerID }) {
+            bannerWaitQueue.remove(at: index)
+            
+        } else if let index = bannerCurrentlyShowingQueue.firstIndex(where: { $0.bannerID == bannerID }) {
+            bannerCurrentlyShowingQueue[index].dismiss()
+        }
     }
     
     static func prepareBannerToLaunch(banner: LocalNotificationBannerView) {
@@ -53,6 +67,7 @@ open class LocalNotificationBannerService {
         banner.translatesAutoresizingMaskIntoConstraints = false
         banner.loadContentViewIfNeeded()
         mStackView.insertArrangedSubview(banner, at: 0)
+        banner.didAppear()
         
         if case .after(let time) = banner.autoDismissMode {
             banner.startTime = Date().timeIntervalSince1970
@@ -144,6 +159,7 @@ open class LocalNotificationBannerService {
             for banner in removeList {
                 mStackView.removeArrangedSubview(banner)
                 banner.removeFromSuperview()
+                banner.didDisappear()
             }
             
             for banner in addList {

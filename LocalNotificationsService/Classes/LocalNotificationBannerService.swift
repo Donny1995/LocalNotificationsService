@@ -49,7 +49,7 @@ open class LocalNotificationBannerService {
             bannerWaitQueue.remove(at: index)
             
         } else if let index = bannerCurrentlyShowingQueue.firstIndex(where: { $0.bannerID == bannerID }) {
-            bannerCurrentlyShowingQueue[index].dismiss()
+            bannerCurrentlyShowingQueue[index].suspend()
         }
     }
     

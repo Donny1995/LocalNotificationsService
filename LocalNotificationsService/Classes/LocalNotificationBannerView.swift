@@ -21,7 +21,7 @@ open class LocalNotificationBannerView: UIView {
     public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    internal var isMarkedForDismiss: Bool = false
+    internal private(set) var isMarkedForDismiss: Bool = false
     internal func loadContentViewIfNeeded() { _ = contentView }
     public internal(set) lazy var contentView: UIView = {
         let contentView = loadContentView()
@@ -59,7 +59,24 @@ open class LocalNotificationBannerView: UIView {
         case after(time: TimeInterval)
     }
     
+    public enum DismissOrigin {
+        ///with AutoDissmissMode.after(...
+        case auto
+        ///user interactive
+        case hand
+        ///External message about a banner asked to leave
+        case suspended
+    }
+    
+    public private(set) var dismissOrigin: DismissOrigin?
+    
     public func dismiss() {
+        isMarkedForDismiss = true
+        LocalNotificationBannerService.updateBannersInvocations()
+    }
+    
+    public func suspend() {
+        dismissOrigin = .suspended
         isMarkedForDismiss = true
         LocalNotificationBannerService.updateBannersInvocations()
     }
@@ -149,6 +166,7 @@ open class LocalNotificationBannerView: UIView {
                 let velocity = gesture.velocity(in: nil)
                 
                 if gesture.state == .ended && (hypot(translation.x, translation.y) >= UIScreen.main.bounds.width/3 || hypot(velocity.x, velocity.y) >= 800) {
+                    dismissOrigin = .hand
                     isMarkedForDismiss = true
                     isInteractionInProgress = false
                     UIView.animate(withDuration: 0.2, delay: 0.0, options: []) { [weak self] in

@@ -44,12 +44,20 @@ open class LocalNotificationBannerService {
         suspend(bannerID: banner.bannerID)
     }
     
-    public static func suspend(bannerID: UUID) {
+    /// Suspends/or dismisses banner form queue or from screen space
+    /// - Returns: Bool, indicating if banner was really suspended or not
+    public static func suspend(bannerID: UUID) -> Bool {
         if let index = bannerWaitQueue.firstIndex(where: { $0.bannerID == bannerID }) {
             bannerWaitQueue.remove(at: index)
+            return true
             
         } else if let index = bannerCurrentlyShowingQueue.firstIndex(where: { $0.bannerID == bannerID }) {
             bannerCurrentlyShowingQueue[index].suspend()
+            return true
+            
+        } else {
+            
+            return false
         }
     }
     

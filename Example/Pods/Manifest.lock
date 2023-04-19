@@ -1,0 +1,16 @@
+PODS:
+  - LocalNotificationsService (1.0.2)
+
+DEPENDENCIES:
+  - LocalNotificationsService (from `../`)
+
+EXTERNAL SOURCES:
+  LocalNotificationsService:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  LocalNotificationsService: 00c295f3811b872d2ecae7d8cdf967ccb36fbe36
+
+PODFILE CHECKSUM: 5b7dff76b68333ef6c811cff846bfd928e248f0c
+
+COCOAPODS: 1.11.2

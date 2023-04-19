@@ -1,0 +1,25 @@
+{
+  "name": "LocalNotificationsService",
+  "version": "1.0.2",
+  "summary": "Local banners with ease",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Donny1995/LocalNotificationsService",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Donny1995": "sanny199955@mail.ru"
+  },
+  "source": {
+    "git": "https://github.com/Donny1995/LocalNotificationsService.git",
+    "tag": "1.0.2"
+  },
+  "swift_versions": "5.0",
+  "platforms": {
+    "ios": "13.0"
+  },
+  "source_files": "LocalNotificationsService/Classes/**/*",
+  "frameworks": "UIKit",
+  "swift_version": "5.0"
+}

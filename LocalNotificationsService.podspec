@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'LocalNotificationsService'
-  s.version          = '1.0.4'
+  s.version          = '1.0.5'
   s.summary          = 'Local banners with ease'
 
 # This description is used to generate tags and improve search results.

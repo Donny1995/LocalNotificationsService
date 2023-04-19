@@ -1,0 +1,6 @@
+framework module Pods_LocalNotificationsService_Example {
+  umbrella header "Pods-LocalNotificationsService_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
